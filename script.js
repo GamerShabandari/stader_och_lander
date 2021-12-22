@@ -43,6 +43,7 @@ function renderMainCities(cities) {
 
         let chosenCountry = event.target.id;
         console.log(chosenCountry);
+        mainContainer.innerHTML = "";
 
 
         for (let i = 0; i < cities.length; i++) {
@@ -51,6 +52,11 @@ function renderMainCities(cities) {
             if (cityToMain.countryid == chosenCountry) {
 
                 console.log(cityToMain);
+                const countryContainerDiv = document.createElement("div");
+                countryContainerDiv.id = cityToMain.id;
+                countryContainerDiv.innerText = cityToMain.stadname;
+
+                mainContainer.append(countryContainerDiv);
                 
             }
             
