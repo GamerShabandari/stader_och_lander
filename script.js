@@ -75,6 +75,7 @@ function renderChosenCityInfo(chosenCities) {
 
     mainContainer.addEventListener("click", function(event){
         
+        cityDetailsContainer.innerHTML = "";
 
         for (let i = 0; i < chosenCities.length; i++) {
             const chosenCity = chosenCities[i];
