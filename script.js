@@ -49,6 +49,7 @@ function renderMainCities(cities) {
         let chosenCountry = event.target.id;
         //console.log(chosenCountry);
         mainContainer.innerHTML = "";
+        cityDetailsContainer.innerHTML = "";
 
 
         for (let i = 0; i < cities.length; i++) {
@@ -101,6 +102,15 @@ function renderChosenCityInfo(chosenCities) {
 
                     console.log("du vill spara stadens id " + chosenCity.id + " till localstorage för att visa som besökt, och även räkna ihop alla invånare");
 
+                    let storageSerialized = localStorage.getItem("besöktastäder");
+
+                    if (storageSerialized) {
+
+                        let storageDeSerialized = JSON.parse(localStorage.getItem("besöktastäder"));
+                        
+
+                    }
+
                     sumOfAllPopulation(chosenCity.population);
 
                 });
@@ -115,10 +125,10 @@ function renderChosenCityInfo(chosenCities) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-citiesIHaveVisited.addEventListener("click", function(){
+citiesIHaveVisited.addEventListener("click", function () {
 
     console.log("dessa städer har du besökt tidigare: ");
-    console.log("total antal invånare av alla städer du besökt är: " , totalPopulationOfVisitedCities);
+    console.log("total antal invånare av alla städer du besökt är: ", totalPopulationOfVisitedCities);
 
     // en funktion som kollar localstorage, loopar igenom alla id nummer och printar ut dessa städer
 
