@@ -107,7 +107,16 @@ function renderChosenCityInfo(chosenCities) {
                     if (storageSerialized) {
 
                         let storageDeSerialized = JSON.parse(localStorage.getItem("besöktastäder"));
-                        
+                        storageDeSerialized.push(chosenCity.id)
+                        localStorage.setItem("besöktastäder", JSON.stringify(storageDeSerialized));
+                        //finns sedan innan lägg till denna också
+
+
+                    } else {
+                        //finns ej sedan innna, skapa
+                        let besoktaStader = [];
+                        besoktaStader.push(chosenCity.id);
+                        localStorage.setItem("besöktastäder", JSON.stringify(besoktaStader));
 
                     }
 
@@ -131,6 +140,32 @@ citiesIHaveVisited.addEventListener("click", function () {
     console.log("total antal invånare av alla städer du besökt är: ", totalPopulationOfVisitedCities);
 
     // en funktion som kollar localstorage, loopar igenom alla id nummer och printar ut dessa städer
+
+    let storageSerialized = localStorage.getItem("besöktastäder");
+
+    if (storageSerialized) {
+
+        let storageDeSerialized = JSON.parse(localStorage.getItem("besöktastäder"));
+        
+        for (let i = 0; i < storageDeSerialized.length; i++) {
+            const cityVisited = storageDeSerialized[i];
+
+            console.log(cityVisited);
+
+            
+            
+        }
+
+    } else {
+        //finns ej sedan innna, skapa
+        // let besoktaStader = [];
+        // besoktaStader.push(chosenCity.id);
+        // localStorage.setItem("besöktastäder", JSON.stringify(besoktaStader));
+        
+        console.log("tomt");
+
+    }
+
 
 
 });
