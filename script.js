@@ -11,18 +11,18 @@ Promise.all([
     fetch("stad.json").then(response => response.json()),
 
 ])
-.then(jsonData => {
-   
-    let countries = jsonData[0];
-    let cities = jsonData[1];
-    renderNavbar(countries);
-    renderMainCities(cities);
-});
+    .then(jsonData => {
+
+        let countries = jsonData[0];
+        let cities = jsonData[1];
+        renderNavbar(countries);
+        renderMainCities(cities);
+    });
 
 ////////////////////////////////////////////////////////////////////////////////
 
-function renderNavbar (countries) {
-    
+function renderNavbar(countries) {
+
 
     for (let i = 0; i < countries.length; i++) {
         const navbarCountrie = countries[i];
@@ -32,7 +32,7 @@ function renderNavbar (countries) {
         menuDiv.innerText = navbarCountrie.countryname;
 
         navBar.append(menuDiv);
-        
+
     }
 };
 
@@ -40,7 +40,7 @@ function renderNavbar (countries) {
 
 function renderMainCities(cities) {
 
-    navBar.addEventListener("click", function(event){
+    navBar.addEventListener("click", function (event) {
 
         let chosenCountry = event.target.id;
         //console.log(chosenCountry);
@@ -58,13 +58,13 @@ function renderMainCities(cities) {
                 countryContainerDiv.innerText = cityToMain.stadname;
 
                 mainContainer.append(countryContainerDiv);
-                
+
             }
-            
+
         }
 
         renderChosenCityInfo(cities)
-        
+
     });
 
 };
@@ -73,8 +73,8 @@ function renderMainCities(cities) {
 
 function renderChosenCityInfo(chosenCities) {
 
-    mainContainer.addEventListener("click", function(event){
-        
+    mainContainer.addEventListener("click", function (event) {
+
         cityDetailsContainer.innerHTML = "";
 
         for (let i = 0; i < chosenCities.length; i++) {
@@ -93,9 +93,15 @@ function renderChosenCityInfo(chosenCities) {
                 cityDetails.append(cityPopulation, visitedBtn);
                 //mainContainer.append(cityDetails);
                 cityDetailsContainer.append(cityDetails);
-                
-            }
+
+                visitedBtn.addEventListener("click", function () {
+
+                    console.log("du vill spara stadens id " + chosenCity.id + " till localstorage");
             
+                });
+
+            }
+
         }
 
     });
