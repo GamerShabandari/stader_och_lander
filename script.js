@@ -3,6 +3,10 @@ const navBar = document.getElementById("navBar");
 const mainContainer = document.getElementById("mainContainer");
 const cityDetailsContainer = document.getElementById("cityDetailsContainer");
 
+const citiesIHaveVisited = document.getElementById("citiesIHaveVisited");
+
+let totalPopulationOfVisitedCities = 0;
+
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -91,13 +95,14 @@ function renderChosenCityInfo(chosenCities) {
                 visitedBtn.innerText = "Besökt";
 
                 cityDetails.append(cityPopulation, visitedBtn);
-                //mainContainer.append(cityDetails);
                 cityDetailsContainer.append(cityDetails);
 
                 visitedBtn.addEventListener("click", function () {
 
-                    console.log("du vill spara stadens id " + chosenCity.id + " till localstorage");
-            
+                    console.log("du vill spara stadens id " + chosenCity.id + " till localstorage för att visa som besökt, och även räkna ihop alla invånare");
+
+                    sumOfAllPopulation(chosenCity.population);
+
                 });
 
             }
@@ -107,3 +112,25 @@ function renderChosenCityInfo(chosenCities) {
     });
 
 };
+
+////////////////////////////////////////////////////////////////////////////////
+
+citiesIHaveVisited.addEventListener("click", function(){
+
+    console.log("dessa städer har du besökt tidigare: ");
+    console.log("total antal invånare av alla städer du besökt är: " , totalPopulationOfVisitedCities);
+
+    // en funktion som kollar localstorage, loopar igenom alla id nummer och printar ut dessa städer
+
+
+});
+
+////////////////////////////////////////////////////////////////////////////////
+
+function sumOfAllPopulation(populationToAdd) {
+
+    totalPopulationOfVisitedCities = totalPopulationOfVisitedCities + populationToAdd;
+
+};
+
+////////////////////////////////////////////////////////////////////////////////
