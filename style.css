@@ -9,3 +9,7 @@ main {
     padding: 20px;
     background-color: aqua;
 }
+
+#cityDetailsContainer {
+    background-color: chartreuse;
+}

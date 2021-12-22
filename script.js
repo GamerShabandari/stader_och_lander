@@ -1,6 +1,7 @@
 
 const navBar = document.getElementById("navBar");
 const mainContainer = document.getElementById("mainContainer");
+const cityDetailsContainer = document.getElementById("cityDetailsContainer");
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -25,7 +26,7 @@ function renderNavbar (countries) {
 
     for (let i = 0; i < countries.length; i++) {
         const navbarCountrie = countries[i];
-        console.log(navbarCountrie);
+        //console.log(navbarCountrie);
         const menuDiv = document.createElement("div");
         menuDiv.id = navbarCountrie.id;
         menuDiv.innerText = navbarCountrie.countryname;
@@ -42,7 +43,7 @@ function renderMainCities(cities) {
     navBar.addEventListener("click", function(event){
 
         let chosenCountry = event.target.id;
-        console.log(chosenCountry);
+        //console.log(chosenCountry);
         mainContainer.innerHTML = "";
 
 
@@ -51,7 +52,7 @@ function renderMainCities(cities) {
 
             if (cityToMain.countryid == chosenCountry) {
 
-                console.log(cityToMain);
+                //console.log(cityToMain);
                 const countryContainerDiv = document.createElement("div");
                 countryContainerDiv.id = cityToMain.id;
                 countryContainerDiv.innerText = cityToMain.stadname;
@@ -61,11 +62,41 @@ function renderMainCities(cities) {
             }
             
         }
+
+        renderChosenCityInfo(cities)
+        
+    });
+
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+function renderChosenCityInfo(chosenCities) {
+
+    mainContainer.addEventListener("click", function(event){
         
 
-    
-    
-    
+        for (let i = 0; i < chosenCities.length; i++) {
+            const chosenCity = chosenCities[i];
+
+            if (chosenCity.id == event.target.id) {
+
+                const cityDetails = document.createElement("div");
+                cityDetails.id = chosenCity.stadname;
+                const cityPopulation = document.createElement("h2");
+                cityPopulation.innerText = chosenCity.population;
+                const visitedBtn = document.createElement("button");
+                visitedBtn.id = "visitedBtn";
+                visitedBtn.innerText = "Besökt";
+
+                cityDetails.append(cityPopulation, visitedBtn);
+                //mainContainer.append(cityDetails);
+                cityDetailsContainer.append(cityDetails);
+                
+            }
+            
+        }
+
     });
 
 };
