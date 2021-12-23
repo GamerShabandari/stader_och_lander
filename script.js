@@ -3,6 +3,7 @@ const navBar = document.getElementById("navBar");
 const mainContainer = document.getElementById("mainContainer");
 const cityDetailsContainer = document.getElementById("cityDetailsContainer");
 const citiesIHaveVisited = document.getElementById("citiesIHaveVisited");
+let cityWeatherDetails = document.createElement("div");
 let totalPopulationOfVisitedCities = 0;
 
 
@@ -57,7 +58,6 @@ function renderMainCities(cities) {
 
             if (cityToMain.countryid == chosenCountry) {
 
-                //console.log(cityToMain);
                 const countryContainerDiv = document.createElement("div");
                 countryContainerDiv.id = cityToMain.id;
                 countryContainerDiv.innerText = cityToMain.stadname;
@@ -98,6 +98,20 @@ function renderChosenCityInfo(chosenCities) {
                 cityDetails.append(cityPopulation, visitedBtn);
                 cityDetailsContainer.append(cityDetails);
 
+
+
+                fetch("https://api.openweathermap.org/data/2.5/find?q=" + chosenCity.stadname + "&units=metric&appid=23effeadc3b3bc19076120fd1e560168")
+                    .then(response => response.json())
+                    .then(cityWeather => {
+
+                        cityWeatherDetails.innerHTML = "";
+                        cityWeatherDetails.append("Just nu är det " + cityWeather.list[0].main.temp + " grader Celcius i " + cityWeather.list[0].name)
+
+                        cityDetailsContainer.append(cityWeatherDetails);
+
+                    });
+
+
                 visitedBtn.addEventListener("click", function () {
 
                     let storageSerialized = localStorage.getItem("besöktastäder");
@@ -120,15 +134,6 @@ function renderChosenCityInfo(chosenCities) {
 
                 });
 
-                
-                fetch("https://api.openweathermap.org/data/2.5/find?q="+chosenCity.stadname+"&units=metric&appid=23effeadc3b3bc19076120fd1e560168")
-                .then(response => response.json())
-                .then(cityWeather =>{
-
-                    cityDetailsContainer.append("Just nu är det " + cityWeather.list[0].main.temp + " grader Celcius i "+ cityWeather.list[0].name)
-                    
-                });
-
             }
 
         }
@@ -143,17 +148,17 @@ function citiesVisited(cities) {
 
     citiesIHaveVisited.addEventListener("click", function () {
 
-        navBar.append("total invånare alla besökta städer: " , totalPopulationOfVisitedCities);
-    
+        navBar.append("total invånare alla besökta städer: ", totalPopulationOfVisitedCities);
+
         let storageSerialized = localStorage.getItem("besöktastäder");
-    
+
         if (storageSerialized) {
-    
+
             let storageDeSerialized = JSON.parse(localStorage.getItem("besöktastäder"));
-            
+
             for (let i = 0; i < storageDeSerialized.length; i++) {
                 const cityVisited = storageDeSerialized[i];
-                
+
                 for (let i = 0; i < cities.length; i++) {
                     const cityCheck = cities[i];
 
@@ -165,20 +170,20 @@ function citiesVisited(cities) {
                         visitedCityContainer.innerText = cityCheck.stadname;
 
                         navBar.append(visitedCityContainer);
-                        
+
                     }
-                    
+
                 }
-                
+
             }
-    
+
         } else {
 
             // mainContainer.innerText = "tomt här";
             // mainContainer.insertAdjacentHTML("beforeend", "hejhej")
-    
+
         }
-    
+
     });
 
 };
