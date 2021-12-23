@@ -1,15 +1,69 @@
 
 nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
     background-color: burlywood;
     padding: 20px;
+    height: 20vh;
+    font-size: 2rem;
 }
 
 main {
-    margin-top: 20px;
-    padding: 20px;
+    display: flex;
+    flex-direction: row;
+
+}
+
+
+#mainContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
     background-color: aqua;
+    height: 100vh;
+    width: 50%;
+    padding: 40px;
+    font-size: 2rem;
 }
 
 #cityDetailsContainer {
     background-color: chartreuse;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    width: 50%;
+    padding: 40px;
+    font-size: 2rem;
+}
+
+footer {
+    background-color: chocolate;
+    height: 20vh;
+}
+
+.land1 {
+
+    outline: yellow 5px solid;
+
+}
+
+.land2 {
+    outline: darkblue 5px solid;
+
+}
+
+.land3 {
+
+    outline: red 5px solid;
+
+    
+}
+
+.landcitiesIHaveVisited {
+
+    outline: purple 5px solid;
 }

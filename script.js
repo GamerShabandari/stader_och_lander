@@ -2,9 +2,7 @@
 const navBar = document.getElementById("navBar");
 const mainContainer = document.getElementById("mainContainer");
 const cityDetailsContainer = document.getElementById("cityDetailsContainer");
-
 const citiesIHaveVisited = document.getElementById("citiesIHaveVisited");
-
 let totalPopulationOfVisitedCities = 0;
 
 
@@ -21,6 +19,7 @@ Promise.all([
         let cities = jsonData[1];
         renderNavbar(countries);
         renderMainCities(cities);
+        citiesVisited(cities)
     });
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -30,7 +29,6 @@ function renderNavbar(countries) {
 
     for (let i = 0; i < countries.length; i++) {
         const navbarCountrie = countries[i];
-        //console.log(navbarCountrie);
         const menuDiv = document.createElement("div");
         menuDiv.id = navbarCountrie.id;
         menuDiv.innerText = navbarCountrie.countryname;
@@ -47,9 +45,10 @@ function renderMainCities(cities) {
     navBar.addEventListener("click", function (event) {
 
         let chosenCountry = event.target.id;
-        //console.log(chosenCountry);
         mainContainer.innerHTML = "";
         cityDetailsContainer.innerHTML = "";
+
+        navBar.className = "land" + event.target.id;
 
 
         for (let i = 0; i < cities.length; i++) {
@@ -100,8 +99,6 @@ function renderChosenCityInfo(chosenCities) {
 
                 visitedBtn.addEventListener("click", function () {
 
-                    console.log("du vill spara stadens id " + chosenCity.id + " till localstorage för att visa som besökt, och även räkna ihop alla invånare");
-
                     let storageSerialized = localStorage.getItem("besöktastäder");
 
                     if (storageSerialized) {
@@ -109,11 +106,9 @@ function renderChosenCityInfo(chosenCities) {
                         let storageDeSerialized = JSON.parse(localStorage.getItem("besöktastäder"));
                         storageDeSerialized.push(chosenCity.id)
                         localStorage.setItem("besöktastäder", JSON.stringify(storageDeSerialized));
-                        //finns sedan innan lägg till denna också
-
 
                     } else {
-                        //finns ej sedan innna, skapa
+
                         let besoktaStader = [];
                         besoktaStader.push(chosenCity.id);
                         localStorage.setItem("besöktastäder", JSON.stringify(besoktaStader));
@@ -134,41 +129,49 @@ function renderChosenCityInfo(chosenCities) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-citiesIHaveVisited.addEventListener("click", function () {
+function citiesVisited(cities) {
 
-    console.log("dessa städer har du besökt tidigare: ");
-    console.log("total antal invånare av alla städer du besökt är: ", totalPopulationOfVisitedCities);
+    citiesIHaveVisited.addEventListener("click", function () {
 
-    // en funktion som kollar localstorage, loopar igenom alla id nummer och printar ut dessa städer
-
-    let storageSerialized = localStorage.getItem("besöktastäder");
-
-    if (storageSerialized) {
-
-        let storageDeSerialized = JSON.parse(localStorage.getItem("besöktastäder"));
-        
-        for (let i = 0; i < storageDeSerialized.length; i++) {
-            const cityVisited = storageDeSerialized[i];
-
-            console.log(cityVisited);
-
+        navBar.append("total invånare alla besökta städer: " , totalPopulationOfVisitedCities);
+    
+        let storageSerialized = localStorage.getItem("besöktastäder");
+    
+        if (storageSerialized) {
+    
+            let storageDeSerialized = JSON.parse(localStorage.getItem("besöktastäder"));
             
-            
+            for (let i = 0; i < storageDeSerialized.length; i++) {
+                const cityVisited = storageDeSerialized[i];
+                
+                for (let i = 0; i < cities.length; i++) {
+                    const cityCheck = cities[i];
+
+                    if (cityCheck.id == cityVisited) {
+
+                        console.log(cityCheck.stadname);
+
+                        let visitedCityContainer = document.createElement("h1");
+                        visitedCityContainer.innerText = cityCheck.stadname;
+
+                        navBar.append(visitedCityContainer);
+                        
+                    }
+                    
+                }
+                
+            }
+    
+        } else {
+
+            // mainContainer.innerText = "tomt här";
+            // mainContainer.insertAdjacentHTML("beforeend", "hejhej")
+    
         }
+    
+    });
 
-    } else {
-        //finns ej sedan innna, skapa
-        // let besoktaStader = [];
-        // besoktaStader.push(chosenCity.id);
-        // localStorage.setItem("besöktastäder", JSON.stringify(besoktaStader));
-        
-        console.log("tomt");
-
-    }
-
-
-
-});
+};
 
 ////////////////////////////////////////////////////////////////////////////////
 
