@@ -12,6 +12,7 @@ Promise.all([
     fetch("land.json").then(response => response.json()),
     fetch("stad.json").then(response => response.json()),
 
+
 ])
     .then(jsonData => {
 
@@ -117,6 +118,15 @@ function renderChosenCityInfo(chosenCities) {
 
                     sumOfAllPopulation(chosenCity.population);
 
+                });
+
+                
+                fetch("https://api.openweathermap.org/data/2.5/find?q="+chosenCity.stadname+"&units=metric&appid=23effeadc3b3bc19076120fd1e560168")
+                .then(response => response.json())
+                .then(cityWeather =>{
+
+                    cityDetailsContainer.append("Just nu är det " + cityWeather.list[0].main.temp + " grader Celcius i "+ cityWeather.list[0].name)
+                    
                 });
 
             }
