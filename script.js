@@ -152,6 +152,17 @@ function citiesVisited(cities) {
 
         cityDetailsContainer.append(totalPopulationOfVisitedCities)
 
+        const clearVisitedStorageBtn = document.createElement("button");
+        clearVisitedStorageBtn.innerText = "Rensa besökta städer";
+        clearVisitedStorageBtn.id = "clearVisitedStorageBtn";
+        cityDetailsContainer.append(clearVisitedStorageBtn);
+
+        clearVisitedStorageBtn.addEventListener("click", function(){
+
+            localStorage.removeItem("besöktastäder");
+
+        });
+
         let storageSerialized = localStorage.getItem("besöktastäder");
 
         if (storageSerialized) {
@@ -178,12 +189,7 @@ function citiesVisited(cities) {
 
             }
 
-        } //else {
-
-        //     mainContainer.innerText = "tomt här";
-        //     mainContainer.insertAdjacentHTML("beforeend", "hejhej")
-
-        // }
+        } 
 
     });
 
