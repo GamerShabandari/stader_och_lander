@@ -1,6 +1,6 @@
 
 const navBar = document.getElementById("navBar");
-const mainContainer = document.getElementById("mainContainer");
+let mainContainer = document.getElementById("mainContainer");
 const cityDetailsContainer = document.getElementById("cityDetailsContainer");
 const citiesIHaveVisited = document.getElementById("citiesIHaveVisited");
 let cityWeatherDetails = document.createElement("div");
@@ -48,7 +48,7 @@ function renderMainCities(cities) {
 
         let chosenCountry = event.target.id;
         mainContainer.innerHTML = "";
-        cityDetailsContainer.innerHTML = "";
+        //cityDetailsContainer.innerHTML = "";
 
         navBar.className = "land" + event.target.id;
 
@@ -148,7 +148,9 @@ function citiesVisited(cities) {
 
     citiesIHaveVisited.addEventListener("click", function () {
 
-        navBar.append("total invånare alla besökta städer: ", totalPopulationOfVisitedCities);
+        cityDetailsContainer.innerHTML = "";
+
+        cityDetailsContainer.append(totalPopulationOfVisitedCities)
 
         let storageSerialized = localStorage.getItem("besöktastäder");
 
@@ -168,8 +170,7 @@ function citiesVisited(cities) {
 
                         let visitedCityContainer = document.createElement("h1");
                         visitedCityContainer.innerText = cityCheck.stadname;
-
-                        navBar.append(visitedCityContainer);
+                        cityDetailsContainer.append(visitedCityContainer);
 
                     }
 
@@ -177,12 +178,12 @@ function citiesVisited(cities) {
 
             }
 
-        } else {
+        } //else {
 
-            // mainContainer.innerText = "tomt här";
-            // mainContainer.insertAdjacentHTML("beforeend", "hejhej")
+        //     mainContainer.innerText = "tomt här";
+        //     mainContainer.insertAdjacentHTML("beforeend", "hejhej")
 
-        }
+        // }
 
     });
 
