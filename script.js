@@ -94,15 +94,18 @@ function renderChosenCityInfo(chosenCities) {
                 visitedBtn.innerText = "Besökt";
                 cityDetailsContainer.append(cityPopulation, visitedBtn);
 
-
-                //https://en.wikipedia.org/w/rest.php/v1/search/page?q=earth&limit=1
-
-
-                fetch("https://en.wikipedia.org/w/rest.php/v1/search/page?q="+ chosenCity.stadname +"&limit=1")
+                fetch("https://en.wikipedia.org/w/rest.php/v1/search/page?q=" + chosenCity.stadname + "&limit=1")
                     .then(response => response.json())
                     .then(cityWiki => {
 
-                        console.log(cityWiki);
+                        let cityWikiInfo = document.createElement("div");
+                        cityWikiInfo.innerText = cityWiki.pages[0].description;
+
+                        let cityThumbnail = document.createElement("img");
+                        cityThumbnail.alt = chosenCity.stadname;
+                        cityThumbnail.src = cityWiki.pages[0].thumbnail.url
+
+                        cityDetailsContainer.append(cityWikiInfo, cityThumbnail);
 
                     });
 
@@ -117,11 +120,7 @@ function renderChosenCityInfo(chosenCities) {
                         let tempRounded = Math.round(temp);
 
                         cityWeatherDetails.innerHTML = "";
-                        cityWeatherDetails.append("Just nu är det " + tempRounded + "°C i " + cityWeather.list[0].name)
-
-
-                        console.log(tempRounded);
-
+                        cityWeatherDetails.append("Just nu är det " + tempRounded + "°C i " + cityWeather.list[0].name);
 
                         cityDetailsContainer.append(cityWeatherDetails);
 
