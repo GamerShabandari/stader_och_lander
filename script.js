@@ -87,16 +87,24 @@ function renderChosenCityInfo(chosenCities) {
 
             if (chosenCity.id == event.target.id) {
 
-                const cityDetails = document.createElement("div");
-                cityDetails.id = chosenCity.stadname;
-                const cityPopulation = document.createElement("h2");
-                cityPopulation.innerText = chosenCity.population;
+                const cityPopulation = document.createElement("div");
+                cityPopulation.innerText = "Antal invånare: " + chosenCity.population;
                 const visitedBtn = document.createElement("button");
                 visitedBtn.id = "visitedBtn";
                 visitedBtn.innerText = "Besökt";
+                cityDetailsContainer.append(cityPopulation, visitedBtn);
 
-                cityDetails.append(cityPopulation, visitedBtn);
-                cityDetailsContainer.append(cityDetails);
+
+                //https://en.wikipedia.org/w/rest.php/v1/search/page?q=earth&limit=1
+
+
+                fetch("https://en.wikipedia.org/w/rest.php/v1/search/page?q="+ chosenCity.stadname +"&limit=1")
+                    .then(response => response.json())
+                    .then(cityWiki => {
+
+                        console.log(cityWiki);
+
+                    });
 
 
 
@@ -104,8 +112,16 @@ function renderChosenCityInfo(chosenCities) {
                     .then(response => response.json())
                     .then(cityWeather => {
 
+
+                        let temp = cityWeather.list[0].main.temp
+                        let tempRounded = Math.round(temp);
+
                         cityWeatherDetails.innerHTML = "";
-                        cityWeatherDetails.append("Just nu är det " + cityWeather.list[0].main.temp + " grader Celcius i " + cityWeather.list[0].name)
+                        cityWeatherDetails.append("Just nu är det " + tempRounded + "°C i " + cityWeather.list[0].name)
+
+
+                        console.log(tempRounded);
+
 
                         cityDetailsContainer.append(cityWeatherDetails);
 
@@ -157,9 +173,11 @@ function citiesVisited(cities) {
         clearVisitedStorageBtn.id = "clearVisitedStorageBtn";
         cityDetailsContainer.append(clearVisitedStorageBtn);
 
-        clearVisitedStorageBtn.addEventListener("click", function(){
+        clearVisitedStorageBtn.addEventListener("click", function () {
 
             localStorage.removeItem("besöktastäder");
+            totalPopulationOfVisitedCities = 0;
+
 
         });
 
@@ -189,7 +207,7 @@ function citiesVisited(cities) {
 
             }
 
-        } 
+        }
 
     });
 
