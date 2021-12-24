@@ -23,7 +23,7 @@ main {
     align-items: center;
     gap: 20px;
     background-color: aqua;
-    height: 100vh;
+    height: auto;
     width: 50%;
     padding: 40px;
     font-size: 2rem;
@@ -35,7 +35,7 @@ main {
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    height: 100vh;
+    height: auto;
     width: 50%;
     padding: 40px;
     font-size: 2rem;
@@ -67,4 +67,10 @@ footer {
 .landcitiesIHaveVisited {
 
     outline: purple 5px solid;
+}
+
+.cityThumbnail {
+
+    border: 5px solid red;
+    
 }

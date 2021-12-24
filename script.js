@@ -104,6 +104,7 @@ function renderChosenCityInfo(chosenCities) {
                         let cityThumbnail = document.createElement("img");
                         cityThumbnail.alt = chosenCity.stadname;
                         cityThumbnail.src = cityWiki.pages[0].thumbnail.url
+                        cityThumbnail.className = "cityThumbnail";
 
                         cityDetailsContainer.append(cityWikiInfo, cityThumbnail);
 
