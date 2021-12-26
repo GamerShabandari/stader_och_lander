@@ -42,10 +42,14 @@ main {
 }
 
 #footerContainer {
+    padding: 20px;
+    gap: 20px;
     background-color: chocolate;
-    height: 20vh;
     display: flex;
-    font-size: 1 rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
     color: whitesmoke;
     text-align: center;
 }
