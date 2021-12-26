@@ -41,9 +41,13 @@ main {
     font-size: 2rem;
 }
 
-footer {
+#footerContainer {
     background-color: chocolate;
     height: 20vh;
+    display: flex;
+    font-size: 1 rem;
+    color: whitesmoke;
+    text-align: center;
 }
 
 .land1 {

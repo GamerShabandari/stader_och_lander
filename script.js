@@ -1,9 +1,10 @@
 
 const navBar = document.getElementById("navBar");
-let mainContainer = document.getElementById("mainContainer");
+const mainContainer = document.getElementById("mainContainer");
 const cityDetailsContainer = document.getElementById("cityDetailsContainer");
 const citiesIHaveVisited = document.getElementById("citiesIHaveVisited");
-let cityWeatherDetails = document.createElement("div");
+const footerContainer = document.getElementById("footerContainer");
+const cityWeatherDetails = document.createElement("div");
 let totalPopulationOfVisitedCities = 0;
 
 
@@ -222,3 +223,16 @@ function sumOfAllPopulation(populationToAdd) {
 };
 
 ////////////////////////////////////////////////////////////////////////////////
+
+fetch("https://api.chucknorris.io/jokes/random")
+.then(response => response.json())
+.then(chuckNorrisJoke => {
+
+        const jokeDiv = document.createElement("div");
+        const chuckIcon = document.createElement("img");
+        chuckIcon.src = chuckNorrisJoke.icon_url;
+        chuckIcon.alt = "Chuck Norris Icon"
+        jokeDiv.innerText = chuckNorrisJoke.value;
+
+        footerContainer.append(jokeDiv, chuckIcon);
+});
