@@ -48,11 +48,13 @@ function renderMainCities(cities) {
     navBar.addEventListener("click", function (event) {
 
         let chosenCountry = event.target.id;
+        console.log(chosenCountry);
         mainContainer.innerHTML = "";
-        //cityDetailsContainer.innerHTML = "";
+        cityDetailsContainer.innerHTML = "";
 
-        navBar.className = "land" + event.target.id;
-
+        if (chosenCountry == "citiesIHaveVisited") {
+            citiesVisited(cities);
+        }
 
         for (let i = 0; i < cities.length; i++) {
             const cityToMain = cities[i];
@@ -117,7 +119,7 @@ function renderChosenCityInfo(chosenCities) {
                     .then(response => response.json())
                     .then(cityWeather => {
 
-
+                        
                         let temp = cityWeather.list[0].main.temp
                         let tempRounded = Math.round(temp);
 
@@ -163,8 +165,6 @@ function renderChosenCityInfo(chosenCities) {
 
 function citiesVisited(cities) {
 
-    citiesIHaveVisited.addEventListener("click", function () {
-
         cityDetailsContainer.innerHTML = "";
 
         cityDetailsContainer.append(totalPopulationOfVisitedCities)
@@ -178,6 +178,7 @@ function citiesVisited(cities) {
 
             localStorage.removeItem("besöktastäder");
             totalPopulationOfVisitedCities = 0;
+            citiesVisited();
 
 
         });
@@ -210,8 +211,6 @@ function citiesVisited(cities) {
 
         }
 
-    });
-
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -225,8 +224,8 @@ function sumOfAllPopulation(populationToAdd) {
 ////////////////////////////////////////////////////////////////////////////////
 
 fetch("https://api.chucknorris.io/jokes/random")
-.then(response => response.json())
-.then(chuckNorrisJoke => {
+    .then(response => response.json())
+    .then(chuckNorrisJoke => {
 
         const jokeDiv = document.createElement("div");
         const chuckIcon = document.createElement("img");
@@ -235,4 +234,4 @@ fetch("https://api.chucknorris.io/jokes/random")
         jokeDiv.innerText = chuckNorrisJoke.value;
 
         footerContainer.append(jokeDiv, chuckIcon);
-});
+    });

@@ -54,24 +54,6 @@ main {
     text-align: center;
 }
 
-.land1 {
-
-    outline: yellow 5px solid;
-
-}
-
-.land2 {
-    outline: darkblue 5px solid;
-
-}
-
-.land3 {
-
-    outline: red 5px solid;
-
-    
-}
-
 .landcitiesIHaveVisited {
 
     outline: purple 5px solid;
