@@ -7,7 +7,6 @@ const footerContainer = document.getElementById("footerContainer");
 const cityWeatherDetails = document.createElement("div");
 let totalPopulationOfVisitedCities = 0;
 
-
 ////////////////////////////////////////////////////////////////////////////////
 
 Promise.all([
@@ -29,7 +28,6 @@ Promise.all([
 
 function renderNavbar(countries) {
 
-
     for (let i = 0; i < countries.length; i++) {
         const navbarCountrie = countries[i];
         const menuDiv = document.createElement("div");
@@ -37,7 +35,6 @@ function renderNavbar(countries) {
         menuDiv.innerText = navbarCountrie.countryname;
 
         navBar.append(menuDiv);
-
     }
 };
 
@@ -48,7 +45,6 @@ function renderMainCities(cities) {
     navBar.addEventListener("click", function (event) {
 
         let chosenCountry = event.target.id;
-        console.log(chosenCountry);
         mainContainer.innerHTML = "";
         cityDetailsContainer.innerHTML = "";
 
@@ -209,6 +205,8 @@ function citiesVisited(cities) {
 
             }
 
+        } else {
+            cityDetailsContainer.innerHTML = "";
         }
 
 };
