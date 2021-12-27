@@ -93,7 +93,7 @@ function renderChosenCityInfo(chosenCities) {
                 visitedBtn.innerText = "Besökt";
                 cityDetailsContainer.append(cityPopulation, visitedBtn);
 
-                fetch("https://en.wikipedia.org/w/rest.php/v1/search/page?q=" + chosenCity.stadname + "&limit=1")
+                fetch("https://sv.wikipedia.org/w/rest.php/v1/search/page?q=" + chosenCity.stadname + "&limit=1")
                     .then(response => response.json())
                     .then(cityWiki => {
 
