@@ -27,7 +27,8 @@ nav div:hover {
 main {
     min-height: 50vh;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
     background-color: rgb(36, 36, 36);
 
 }
@@ -35,13 +36,12 @@ main {
 
 #mainContainer {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
     gap: 20px;
     height: auto;
     width: 50%;
-    padding: 40px;
-    
+    padding: 10px;
 }
 #mainContainer div {
     font-size: 1rem;
@@ -63,9 +63,21 @@ main {
     gap: 20px;
     height: auto;
     width: 50%;
-    padding: 40px;
+    padding: 10px;
+    padding-bottom: 30px;
     font-size: 1rem;
     color: snow;
+}
+
+#cityDetailsContainer div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#cityDetailsContainer img:hover {
+    width: 400px;   
 }
 
 #footerContainer {
