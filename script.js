@@ -8,6 +8,13 @@ const cityWeatherDetails = document.createElement("div");
 const cityWikiInfo = document.createElement("div");
 let totalPopulationOfVisitedCities = 0;
 
+
+////////////////////////////////////////////////////////////////////////////////
+// importerar modul och kör sedan funktionen
+////////////////////////////////////////////////////////////////////////////////
+
+import { renderJoke } from './modules/jokes.mjs'
+
 renderJoke();
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -252,32 +259,4 @@ function sumOfAllPopulation(populationToAdd) {
         localStorage.setItem("antalinvånare", JSON.stringify(totalPopulationOfVisitedCities));
     }
 
-};
-
-////////////////////////////////////////////////////////////////////////////////
-// fetchar chuck norris skämt och lägger i footern
-////////////////////////////////////////////////////////////////////////////////
-
-function renderJoke() {
-
-    fetch("https://api.chucknorris.io/jokes/random")
-        .then(response => response.json())
-        .then(chuckNorrisJoke => {
-
-            const jokeDiv = document.createElement("div");
-            const chuckIcon = document.createElement("img");
-            chuckIcon.src = chuckNorrisJoke.icon_url;
-            chuckIcon.alt = "Chuck Norris Icon"
-            chuckIcon.className = "chuckIcon"
-            jokeDiv.innerText = chuckNorrisJoke.value;
-
-            footerContainer.innerHTML = "";
-            footerContainer.append(jokeDiv, chuckIcon);
-
-            chuckIcon.addEventListener("click", function () {
-
-                renderJoke();
-
-            })
-        });
 };
