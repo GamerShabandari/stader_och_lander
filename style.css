@@ -123,9 +123,14 @@ main {
      color: white;
   }
 
-  .chuckIcon {
-    border-radius: 10%;
-    border: 1px solid whitesmoke;
-    transition-duration: 0.4s;
+  footer img {
+    opacity: 50%;
+    border: whitesmoke solid 1px;
+    border-radius: 15%;
+  }
 
-  };
+  footer img:hover {
+      border: goldenrod 1px solid;
+      border-radius: 15%;
+      opacity: 100%;
+  }
