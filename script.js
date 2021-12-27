@@ -7,6 +7,25 @@ const footerContainer = document.getElementById("footerContainer");
 const cityWeatherDetails = document.createElement("div");
 let totalPopulationOfVisitedCities = 0;
 
+
+////////////////////////////////////////////////////////////////////////////////
+
+//bortse från detta block, förbereder för att testa ficka moduler
+
+// let testare = Promise.all([
+//     fetch("land.json").then(response => response.json()),
+//     fetch("stad.json").then(response => response.json()),
+
+
+// ])
+//     .then(jsonData => {
+
+//         return jsonData;
+//     });
+// console.log(testare);
+
+////////////////////////////////////////////////////////////////////////////////
+// fetchar Json filer och skickar vidare data till 3 olika funktioner längre ner
 ////////////////////////////////////////////////////////////////////////////////
 
 Promise.all([
@@ -25,6 +44,8 @@ Promise.all([
     });
 
 ////////////////////////////////////////////////////////////////////////////////
+//tar emot countries från övre fetch och loopar sedan igenom den och lägger innehåll i nav
+////////////////////////////////////////////////////////////////////////////////
 
 function renderNavbar(countries) {
 
@@ -38,6 +59,9 @@ function renderNavbar(countries) {
     }
 };
 
+////////////////////////////////////////////////////////////////////////////////
+// tar emot cities från json fetch och skapar en knapp för att rendera ut i main
+// knappen jämför id på event klick med id på städer, det som matchar skrivs ut på main
 ////////////////////////////////////////////////////////////////////////////////
 
 function renderMainCities(cities) {
@@ -74,6 +98,8 @@ function renderMainCities(cities) {
 };
 
 ////////////////////////////////////////////////////////////////////////////////
+// tar emot vald stad från ovan funktion, vid knapptryck skrivs vald stads detaljer ut på höver div i main
+////////////////////////////////////////////////////////////////////////////////
 
 function renderChosenCityInfo(chosenCities) {
 
@@ -93,6 +119,10 @@ function renderChosenCityInfo(chosenCities) {
                 visitedBtn.innerText = "Besökt";
                 cityDetailsContainer.append(cityPopulation, visitedBtn);
 
+                ////////////////////////////////////////////////////////////////////////////////
+                // fetchar wiki detailjer till vald stad och appendar i höger sida av main
+                ////////////////////////////////////////////////////////////////////////////////
+
                 fetch("https://sv.wikipedia.org/w/rest.php/v1/search/page?q=" + chosenCity.stadname + "&limit=1")
                     .then(response => response.json())
                     .then(cityWiki => {
@@ -109,7 +139,9 @@ function renderChosenCityInfo(chosenCities) {
 
                     });
 
-
+                ////////////////////////////////////////////////////////////////////////////////
+                // fetchar väder detailjer till vald stad och appendar i höger sida av main
+                ////////////////////////////////////////////////////////////////////////////////
 
                 fetch("https://api.openweathermap.org/data/2.5/find?q=" + chosenCity.stadname + "&units=metric&appid=23effeadc3b3bc19076120fd1e560168")
                     .then(response => response.json())
@@ -126,6 +158,9 @@ function renderChosenCityInfo(chosenCities) {
 
                     });
 
+                ////////////////////////////////////////////////////////////////////////////////
+                // knapp för att lagra vald stad i besökta städer i localstorage
+                ////////////////////////////////////////////////////////////////////////////////
 
                 visitedBtn.addEventListener("click", function () {
 
@@ -157,6 +192,9 @@ function renderChosenCityInfo(chosenCities) {
 
 };
 
+////////////////////////////////////////////////////////////////////////////////
+// besökta städer tar emot cities från översta fetch, jämför sedan localstorage 
+// städernas id med json städers id för att skriva ut besökta städer i main vid knapptryck
 ////////////////////////////////////////////////////////////////////////////////
 
 function citiesVisited(cities) {
@@ -210,6 +248,8 @@ function citiesVisited(cities) {
 };
 
 ////////////////////////////////////////////////////////////////////////////////
+// räknar ut summan av alla besökta städers invånare
+////////////////////////////////////////////////////////////////////////////////
 
 function sumOfAllPopulation(populationToAdd) {
 
@@ -217,6 +257,8 @@ function sumOfAllPopulation(populationToAdd) {
 
 };
 
+////////////////////////////////////////////////////////////////////////////////
+// fetchar chuck norris skämt och lägger i footern
 ////////////////////////////////////////////////////////////////////////////////
 
 fetch("https://api.chucknorris.io/jokes/random")
