@@ -5,6 +5,7 @@ const cityDetailsContainer = document.getElementById("cityDetailsContainer");
 const citiesIHaveVisited = document.getElementById("citiesIHaveVisited");
 const footerContainer = document.getElementById("footerContainer");
 const cityWeatherDetails = document.createElement("div");
+const cityWikiInfo = document.createElement("div");
 let totalPopulationOfVisitedCities = 0;
 
 renderJoke();
@@ -16,15 +17,12 @@ renderJoke();
 Promise.all([
     fetch("land.json").then(response => response.json()),
     fetch("stad.json").then(response => response.json()),
-
-
 ])
     .then(jsonData => {
 
         let countries = jsonData[0];
         let cities = jsonData[1];
-        renderNavbar(countries);
-        renderMainCities(cities);
+        renderNavbar(countries, cities);
         citiesVisited(cities)
     });
 
@@ -32,7 +30,7 @@ Promise.all([
 //tar emot countries från övre fetch och loopar sedan igenom den och lägger innehåll i nav
 ////////////////////////////////////////////////////////////////////////////////
 
-function renderNavbar(countries) {
+function renderNavbar(countries, cities) {
 
     for (let i = 0; i < countries.length; i++) {
         const navbarCountrie = countries[i];
@@ -41,6 +39,9 @@ function renderNavbar(countries) {
         menuDiv.innerText = navbarCountrie.countryname;
 
         navBar.append(menuDiv);
+        navBar.addEventListener("click", function (event) {
+            renderMainCities(event.target.id, cities);
+        });
     }
 };
 
@@ -49,17 +50,14 @@ function renderNavbar(countries) {
 // knappen jämför id på event klick med id på städer, det som matchar skrivs ut på main
 ////////////////////////////////////////////////////////////////////////////////
 
-function renderMainCities(cities) {
+function renderMainCities(target, cities) {
+    let chosenCountry = target;
+    mainContainer.innerHTML = "";
+    cityDetailsContainer.innerHTML = "";
 
-    navBar.addEventListener("click", function (event) {
-
-        let chosenCountry = event.target.id;
-        mainContainer.innerHTML = "";
-        cityDetailsContainer.innerHTML = "";
-
-        if (chosenCountry == "citiesIHaveVisited") {
-            citiesVisited(cities);
-        }
+    if (chosenCountry == "citiesIHaveVisited") {
+        citiesVisited(cities);
+    } else {
 
         for (let i = 0; i < cities.length; i++) {
             const cityToMain = cities[i];
@@ -71,15 +69,13 @@ function renderMainCities(cities) {
                 countryContainerDiv.innerText = cityToMain.stadname;
 
                 mainContainer.append(countryContainerDiv);
+                cityDetailsContainer.innerHTML = "";
+            };
 
-            }
+        };
 
-        }
-
-        renderChosenCityInfo(cities)
-
-    });
-
+    };
+    renderChosenCityInfo(cities);
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -111,16 +107,17 @@ function renderChosenCityInfo(chosenCities) {
                 fetch("https://sv.wikipedia.org/w/rest.php/v1/search/page?q=" + chosenCity.stadname + "&limit=1")
                     .then(response => response.json())
                     .then(cityWiki => {
-
-                        let cityWikiInfo = document.createElement("div");
-                        cityWikiInfo.innerText = cityWiki.pages[0].description;
-
+                        cityWikiInfo.innerHTML = "";
+                        let cityWikiText = document.createElement("p");
+                        cityWikiText.innerText = cityWiki.pages[0].description;
                         let cityThumbnail = document.createElement("img");
                         cityThumbnail.alt = chosenCity.stadname;
-                        cityThumbnail.src = cityWiki.pages[0].thumbnail.url
+                        cityThumbnail.src = cityWiki.pages[0].thumbnail.url;
                         cityThumbnail.className = "cityThumbnail";
 
-                        cityDetailsContainer.append(cityWikiInfo, cityThumbnail);
+
+                        cityWikiInfo.append(cityWikiText, cityThumbnail);
+                        cityDetailsContainer.append(cityWikiInfo);
 
                     });
 
