@@ -7,23 +7,6 @@ const footerContainer = document.getElementById("footerContainer");
 const cityWeatherDetails = document.createElement("div");
 let totalPopulationOfVisitedCities = 0;
 
-
-////////////////////////////////////////////////////////////////////////////////
-
-//bortse från detta block, förbereder för att testa ficka moduler
-
-// let testare = Promise.all([
-//     fetch("land.json").then(response => response.json()),
-//     fetch("stad.json").then(response => response.json()),
-
-
-// ])
-//     .then(jsonData => {
-
-//         return jsonData;
-//     });
-// console.log(testare);
-
 ////////////////////////////////////////////////////////////////////////////////
 // fetchar Json filer och skickar vidare data till 3 olika funktioner längre ner
 ////////////////////////////////////////////////////////////////////////////////
@@ -147,7 +130,7 @@ function renderChosenCityInfo(chosenCities) {
                     .then(response => response.json())
                     .then(cityWeather => {
 
-                        
+
                         let temp = cityWeather.list[0].main.temp
                         let tempRounded = Math.round(temp);
 
@@ -199,51 +182,54 @@ function renderChosenCityInfo(chosenCities) {
 
 function citiesVisited(cities) {
 
-        cityDetailsContainer.innerHTML = "";
+    cityDetailsContainer.innerHTML = "";
 
-        cityDetailsContainer.append("Totalt antal invåndare alla besökta städer: " + totalPopulationOfVisitedCities)
+    let storagePopCountDeserialized = JSON.parse(localStorage.getItem("antalinvånare"));
+    cityDetailsContainer.innerText = "Städer du tidigare besökt är:"
+    const clearVisitedStorageBtn = document.createElement("button");
+    clearVisitedStorageBtn.innerText = "Rensa besökta städer";
+    clearVisitedStorageBtn.id = "clearVisitedStorageBtn";
 
-        const clearVisitedStorageBtn = document.createElement("button");
-        clearVisitedStorageBtn.innerText = "Rensa besökta städer";
-        clearVisitedStorageBtn.id = "clearVisitedStorageBtn";
-        cityDetailsContainer.append(clearVisitedStorageBtn);
+    let storageSerialized = localStorage.getItem("besöktastäder");
 
-        clearVisitedStorageBtn.addEventListener("click", function () {
+    if (storageSerialized) {
 
-            localStorage.removeItem("besöktastäder");
-            totalPopulationOfVisitedCities = 0;
-            citiesVisited();
+        let storageDeSerialized = JSON.parse(localStorage.getItem("besöktastäder"));
+
+        for (let i = 0; i < storageDeSerialized.length; i++) {
+            const cityVisited = storageDeSerialized[i];
+
+            for (let i = 0; i < cities.length; i++) {
+                const cityCheck = cities[i];
+
+                if (cityCheck.id == cityVisited) {
+
+                    let visitedCityContainer = document.createElement("h3");
+                    visitedCityContainer.innerText = cityCheck.stadname;
+                    cityDetailsContainer.append(visitedCityContainer, clearVisitedStorageBtn);
+
+                    clearVisitedStorageBtn.addEventListener("click", function () {
+
+                        localStorage.removeItem("besöktastäder");
+                        totalPopulationOfVisitedCities = 0;
+                        localStorage.removeItem("antalinvånare");
+                        citiesVisited();
 
 
-        });
-
-        let storageSerialized = localStorage.getItem("besöktastäder");
-
-        if (storageSerialized) {
-
-            let storageDeSerialized = JSON.parse(localStorage.getItem("besöktastäder"));
-
-            for (let i = 0; i < storageDeSerialized.length; i++) {
-                const cityVisited = storageDeSerialized[i];
-
-                for (let i = 0; i < cities.length; i++) {
-                    const cityCheck = cities[i];
-
-                    if (cityCheck.id == cityVisited) {
-
-                        let visitedCityContainer = document.createElement("h3");
-                        visitedCityContainer.innerText = cityCheck.stadname;
-                        cityDetailsContainer.append(visitedCityContainer);
-
-                    }
+                    });
 
                 }
 
             }
 
-        } else {
-            cityDetailsContainer.innerHTML = "";
         }
+        let summaDiv = document.createElement("p");
+        summaDiv.innerText = "Summa invånare alla besökta städer: "
+        cityDetailsContainer.append(summaDiv, storagePopCountDeserialized);
+
+    } else {
+        cityDetailsContainer.innerHTML = "";
+    }
 
 };
 
@@ -253,7 +239,19 @@ function citiesVisited(cities) {
 
 function sumOfAllPopulation(populationToAdd) {
 
-    totalPopulationOfVisitedCities = totalPopulationOfVisitedCities + populationToAdd;
+    let storagePopCountSerialized = localStorage.getItem("antalinvånare");
+
+    if (storagePopCountSerialized) {
+
+        let storagePopCountDeserialized = JSON.parse(localStorage.getItem("antalinvånare"));
+        totalPopulationOfVisitedCities = storagePopCountDeserialized + populationToAdd;
+        localStorage.setItem("antalinvånare", JSON.stringify(totalPopulationOfVisitedCities));
+
+    } else {
+
+        totalPopulationOfVisitedCities += populationToAdd;
+        localStorage.setItem("antalinvånare", JSON.stringify(totalPopulationOfVisitedCities));
+    }
 
 };
 
