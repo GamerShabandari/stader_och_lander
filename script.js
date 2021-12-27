@@ -7,6 +7,8 @@ const footerContainer = document.getElementById("footerContainer");
 const cityWeatherDetails = document.createElement("div");
 let totalPopulationOfVisitedCities = 0;
 
+renderJoke();
+
 ////////////////////////////////////////////////////////////////////////////////
 // fetchar Json filer och skickar vidare data till 3 olika funktioner längre ner
 ////////////////////////////////////////////////////////////////////////////////
@@ -259,16 +261,26 @@ function sumOfAllPopulation(populationToAdd) {
 // fetchar chuck norris skämt och lägger i footern
 ////////////////////////////////////////////////////////////////////////////////
 
-fetch("https://api.chucknorris.io/jokes/random")
-    .then(response => response.json())
-    .then(chuckNorrisJoke => {
+function renderJoke() {
 
-        const jokeDiv = document.createElement("div");
-        const chuckIcon = document.createElement("img");
-        chuckIcon.src = chuckNorrisJoke.icon_url;
-        chuckIcon.alt = "Chuck Norris Icon"
-        chuckIcon.className = "chuckIcon"
-        jokeDiv.innerText = chuckNorrisJoke.value;
+    fetch("https://api.chucknorris.io/jokes/random")
+        .then(response => response.json())
+        .then(chuckNorrisJoke => {
 
-        footerContainer.append(jokeDiv, chuckIcon);
-    });
+            const jokeDiv = document.createElement("div");
+            const chuckIcon = document.createElement("img");
+            chuckIcon.src = chuckNorrisJoke.icon_url;
+            chuckIcon.alt = "Chuck Norris Icon"
+            chuckIcon.className = "chuckIcon"
+            jokeDiv.innerText = chuckNorrisJoke.value;
+
+            footerContainer.innerHTML = "";
+            footerContainer.append(jokeDiv, chuckIcon);
+
+            chuckIcon.addEventListener("click", function () {
+
+                renderJoke();
+
+            })
+        });
+};
