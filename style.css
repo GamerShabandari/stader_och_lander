@@ -32,6 +32,10 @@ main {
     background-color: rgb(36, 36, 36);
 
 }
+.logo{
+    position: absolute;
+    left: 3.125rem;
+}
 
 
 #mainContainer {
