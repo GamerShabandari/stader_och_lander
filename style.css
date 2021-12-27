@@ -1,131 +1,61 @@
-body{
-    margin: 0%;
-    background-color: black;
+* {
+    margin: 0;
+    padding: 0;
 }
 
-nav {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    background-color: black;
-    padding: 20px;
-    height: 15vh;
-    font-size: 1.2rem;
-    color: snow;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    transition-duration: 0.5s;
-    transition:ease-in-out
+header {
+    background-color: #66a3ff;
+    height: 100px;
 }
 
-nav div:hover {
-    color: goldenrod;
-    font-size: 1.6rem
+h2 {
+    padding: 30px;
+    font-size: 2rem;
+    color: white;
+    text-shadow: 2px 2px black;
+    display: inline-flex;
 }
 
-main {
-    min-height: 50vh;
-    display: flex;
-    flex-direction: row;
-    background-color: rgb(36, 36, 36);
-
-}
-
-
-#mainContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    height: auto;
-    width: 50%;
-    padding: 40px;
-    
-}
-#mainContainer div {
-    font-size: 1rem;
-    color: snow;
-    transition-duration: 0.4s;
-    transition: ease-in-out;
-}
-
-#mainContainer div:hover {
-    color: goldenrod;
-    font-size: 1.2rem;
-}
-
-#cityDetailsContainer {
-    background-color: rgb(36, 36, 36);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    height: auto;
-    width: 50%;
-    padding: 40px;
-    font-size: 1rem;
-    color: snow;
-}
-
-#footerContainer {
-    padding: 20px;
-    gap: 20px;
-    background-color: black;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-size: 1rem;
-    color: whitesmoke;
+h4 {
+    padding: 10px;
+    font-size: 1.5rem;
     text-align: center;
 }
 
-.cityThumbnail {
-
-    border-radius: 5%;
-    
+button {
+    padding: 10px;
+    margin-top: 20px;
+    width: 15%;
+    border: none;
+    border-radius: 4px;
+    background-color: #002966;
+    color: #cce0ff;
 }
 
-#visitedBtn {
-    background-color: white;
-    color: black;
-    border: 2px solid #555555;
-    padding: 16px 32px;
+button:hover {
+    background-color: #cce0ff;
+    color: #002966;
+    border: 1px solid #002966;
+}
+
+#visitedCities {
+    color: yellow;
+}
+
+#cityInfo {
     text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    transition-duration: 0.4s;
-  }
-  
-  #visitedBtn:hover {
-    background-color: #555555;
-     color: white;
-  }
+    font-size: 1.5rem;
+    padding: 10px;
+}
 
-  #clearVisitedStorageBtn {
-    background-color: white;
-    color: black;
-    border: 2px solid #555555;
-    padding: 16px 32px;
+#weatherContainer, #cityDetailsContainer {
     text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 1rem;
-    margin: 4px 2px;
-    transition-duration: 0.4s;
-  }
-  
-  #clearVisitedStorageBtn:hover {
-    background-color: #555555;
-     color: white;
-  }
+    font-size: 1.5rem;
+    padding: 10px;
+}
 
-  .chuckIcon {
-    border-radius: 10%;
-    border: 1px solid whitesmoke;
-    transition-duration: 0.4s;
-
-  };
+section {
+    background-color: #66a3ff;
+    background-image: linear-gradient(#66a3ff, white);
+    height: 100vh;
+}
