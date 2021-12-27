@@ -163,7 +163,7 @@ function citiesVisited(cities) {
 
         cityDetailsContainer.innerHTML = "";
 
-        cityDetailsContainer.append(totalPopulationOfVisitedCities)
+        cityDetailsContainer.append("Totalt antal invåndare alla besökta städer: " + totalPopulationOfVisitedCities)
 
         const clearVisitedStorageBtn = document.createElement("button");
         clearVisitedStorageBtn.innerText = "Rensa besökta städer";
@@ -193,9 +193,7 @@ function citiesVisited(cities) {
 
                     if (cityCheck.id == cityVisited) {
 
-                        console.log(cityCheck.stadname);
-
-                        let visitedCityContainer = document.createElement("h1");
+                        let visitedCityContainer = document.createElement("h3");
                         visitedCityContainer.innerText = cityCheck.stadname;
                         cityDetailsContainer.append(visitedCityContainer);
 
@@ -229,6 +227,7 @@ fetch("https://api.chucknorris.io/jokes/random")
         const chuckIcon = document.createElement("img");
         chuckIcon.src = chuckNorrisJoke.icon_url;
         chuckIcon.alt = "Chuck Norris Icon"
+        chuckIcon.className = "chuckIcon"
         jokeDiv.innerText = chuckNorrisJoke.value;
 
         footerContainer.append(jokeDiv, chuckIcon);
