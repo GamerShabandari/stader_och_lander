@@ -15,19 +15,28 @@ import { renderJoke } from "./modules/jokes.mjs";
 
 renderJoke();
 
+gsap.from('#footerContainer', { duration: 2, delay: 1, y: '200%', ease: 'elastic' })
+
 ////////////////////////////////////////////////////////////////////////////////
 // fetchar Json filer och skickar vidare data till 3 olika funktioner längre ner
 ////////////////////////////////////////////////////////////////////////////////
 
 Promise.all([
-  fetch("land.json").then((response) => response.json()),
-  fetch("stad.json").then((response) => response.json()),
-]).then((jsonData) => {
-  let countries = jsonData[0];
-  let cities = jsonData[1];
-  renderNavbar(countries, cities);
-  citiesVisited(cities);
-});
+
+    fetch("land.json").then(response => response.json()),
+    fetch("stad.json").then(response => response.json()),
+])
+    .then(jsonData => {
+
+        let countries = jsonData[0];
+        let cities = jsonData[1];
+        renderNavbar(countries, cities);
+        citiesVisited(cities)
+
+
+        gsap.from('#navBar', { duration: 2, y: '-100', ease: 'elastic' })
+    });
+
 
 ////////////////////////////////////////////////////////////////////////////////
 //tar emot countries från övre fetch och loopar sedan igenom den och lägger innehåll i nav
