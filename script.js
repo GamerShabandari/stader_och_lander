@@ -17,6 +17,8 @@ import { renderJoke } from './modules/jokes.mjs'
 
 renderJoke();
 
+gsap.from('#footerContainer', { duration: 2, delay: 1, y: '200%', ease: 'elastic' })
+
 ////////////////////////////////////////////////////////////////////////////////
 // fetchar Json filer och skickar vidare data till 3 olika funktioner längre ner
 ////////////////////////////////////////////////////////////////////////////////
@@ -31,6 +33,9 @@ Promise.all([
         let cities = jsonData[1];
         renderNavbar(countries, cities);
         citiesVisited(cities)
+
+
+        gsap.from('#navBar', { duration: 2, y: '-100', ease: 'elastic' })
     });
 
 ////////////////////////////////////////////////////////////////////////////////

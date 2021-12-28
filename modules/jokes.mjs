@@ -19,6 +19,8 @@ export function renderJoke() {
             footerContainer.innerHTML = "";
             footerContainer.append(jokeDiv, chuckIcon);
 
+            gsap.from('.chuckIcon', { duration: 2, rotation: 720, ease: 'elastic' })
+
             chuckIcon.addEventListener("click", function () {
 
                 renderJoke();
