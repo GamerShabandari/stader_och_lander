@@ -1,4 +1,3 @@
-
 const navBar = document.getElementById("navBar");
 const mainContainer = document.getElementById("mainContainer");
 const cityDetailsContainer = document.getElementById("cityDetailsContainer");
@@ -8,12 +7,11 @@ const cityWeatherDetails = document.createElement("div");
 const cityWikiInfo = document.createElement("div");
 let totalPopulationOfVisitedCities = 0;
 
-
 ////////////////////////////////////////////////////////////////////////////////
 // importerar modul och kör sedan funktionen
 ////////////////////////////////////////////////////////////////////////////////
 
-import { renderJoke } from './modules/jokes.mjs'
+import { renderJoke } from "./modules/jokes.mjs";
 
 renderJoke();
 
@@ -24,6 +22,7 @@ gsap.from('#footerContainer', { duration: 2, delay: 1, y: '200%', ease: 'elastic
 ////////////////////////////////////////////////////////////////////////////////
 
 Promise.all([
+
     fetch("land.json").then(response => response.json()),
     fetch("stad.json").then(response => response.json()),
 ])
@@ -38,24 +37,24 @@ Promise.all([
         gsap.from('#navBar', { duration: 2, y: '-100', ease: 'elastic' })
     });
 
+
 ////////////////////////////////////////////////////////////////////////////////
 //tar emot countries från övre fetch och loopar sedan igenom den och lägger innehåll i nav
 ////////////////////////////////////////////////////////////////////////////////
 
 function renderNavbar(countries, cities) {
+  for (let i = 0; i < countries.length; i++) {
+    const navbarCountrie = countries[i];
+    const menuDiv = document.createElement("div");
+    menuDiv.id = navbarCountrie.id;
+    menuDiv.innerText = navbarCountrie.countryname;
 
-    for (let i = 0; i < countries.length; i++) {
-        const navbarCountrie = countries[i];
-        const menuDiv = document.createElement("div");
-        menuDiv.id = navbarCountrie.id;
-        menuDiv.innerText = navbarCountrie.countryname;
-
-        navBar.append(menuDiv);
-        navBar.addEventListener("click", function (event) {
-            renderMainCities(event.target.id, cities);
-        });
-    }
-};
+    navBar.append(menuDiv);
+    navBar.addEventListener("click", function (event) {
+      renderMainCities(event.target.id, cities);
+    });
+  }
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 // tar emot cities från json fetch och skapar en knapp för att rendera ut i main
@@ -63,205 +62,202 @@ function renderNavbar(countries, cities) {
 ////////////////////////////////////////////////////////////////////////////////
 
 function renderMainCities(target, cities) {
-    let chosenCountry = target;
-    mainContainer.innerHTML = "";
-    cityDetailsContainer.innerHTML = "";
+  let chosenCountry = target;
+  mainContainer.innerHTML = "";
+  cityDetailsContainer.innerHTML = "";
 
-    if (chosenCountry == "citiesIHaveVisited") {
-        citiesVisited(cities);
-    } else {
+  if (chosenCountry == "citiesIHaveVisited") {
+    citiesVisited(cities);
+  } else {
+    for (let i = 0; i < cities.length; i++) {
+      const cityToMain = cities[i];
 
-        for (let i = 0; i < cities.length; i++) {
-            const cityToMain = cities[i];
+      if (cityToMain.countryid == chosenCountry) {
+        const countryContainerDiv = document.createElement("div");
+        countryContainerDiv.id = cityToMain.id;
+        countryContainerDiv.innerText = cityToMain.stadname;
 
-            if (cityToMain.countryid == chosenCountry) {
-
-                const countryContainerDiv = document.createElement("div");
-                countryContainerDiv.id = cityToMain.id;
-                countryContainerDiv.innerText = cityToMain.stadname;
-
-                mainContainer.append(countryContainerDiv);
-                cityDetailsContainer.innerHTML = "";
-            };
-
-        };
-
-    };
-    renderChosenCityInfo(cities);
-};
+        mainContainer.append(countryContainerDiv);
+        cityDetailsContainer.innerHTML = "";
+      }
+    }
+  }
+  renderChosenCityInfo(cities);
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 // tar emot vald stad från ovan funktion, vid knapptryck skrivs vald stads detaljer ut på höver div i main
 ////////////////////////////////////////////////////////////////////////////////
 
 function renderChosenCityInfo(chosenCities) {
+  mainContainer.addEventListener("click", function (event) {
+    cityDetailsContainer.innerHTML = "";
 
-    mainContainer.addEventListener("click", function (event) {
+    for (let i = 0; i < chosenCities.length; i++) {
+      const chosenCity = chosenCities[i];
 
-        cityDetailsContainer.innerHTML = "";
+      if (chosenCity.id == event.target.id) {
+        const cityPopulation = document.createElement("div");
+        cityPopulation.innerText = "Antal invånare: " + chosenCity.population;
+        const visitedBtn = document.createElement("button");
+        visitedBtn.id = "visitedBtn";
+        visitedBtn.innerText = "Besökt";
+        cityDetailsContainer.append(cityPopulation, visitedBtn);
 
-        for (let i = 0; i < chosenCities.length; i++) {
-            const chosenCity = chosenCities[i];
+        ////////////////////////////////////////////////////////////////////////////////
+        // fetchar wiki detailjer till vald stad och appendar i höger sida av main
+        ////////////////////////////////////////////////////////////////////////////////
 
-            if (chosenCity.id == event.target.id) {
+        fetch(
+          "https://sv.wikipedia.org/w/rest.php/v1/search/page?q=" +
+            chosenCity.stadname +
+            "&limit=1"
+        )
+          .then((response) => response.json())
+          .then((cityWiki) => {
+            cityWikiInfo.innerHTML = "";
+            let cityWikiText = document.createElement("p");
+            cityWikiText.innerText = cityWiki.pages[0].description;
+            let cityThumbnail = document.createElement("img");
+            cityThumbnail.alt = chosenCity.stadname;
+            cityThumbnail.src = cityWiki.pages[0].thumbnail.url;
+            cityThumbnail.className = "cityThumbnail";
 
-                const cityPopulation = document.createElement("div");
-                cityPopulation.innerText = "Antal invånare: " + chosenCity.population;
-                const visitedBtn = document.createElement("button");
-                visitedBtn.id = "visitedBtn";
-                visitedBtn.innerText = "Besökt";
-                cityDetailsContainer.append(cityPopulation, visitedBtn);
+            cityWikiInfo.append(cityWikiText, cityThumbnail);
+            cityDetailsContainer.append(cityWikiInfo);
+          });
 
-                ////////////////////////////////////////////////////////////////////////////////
-                // fetchar wiki detailjer till vald stad och appendar i höger sida av main
-                ////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////
+        // fetchar väder detailjer till vald stad och appendar i höger sida av main
+        ////////////////////////////////////////////////////////////////////////////////
 
-                fetch("https://sv.wikipedia.org/w/rest.php/v1/search/page?q=" + chosenCity.stadname + "&limit=1")
-                    .then(response => response.json())
-                    .then(cityWiki => {
-                        cityWikiInfo.innerHTML = "";
-                        let cityWikiText = document.createElement("p");
-                        cityWikiText.innerText = cityWiki.pages[0].description;
-                        let cityThumbnail = document.createElement("img");
-                        cityThumbnail.alt = chosenCity.stadname;
-                        cityThumbnail.src = cityWiki.pages[0].thumbnail.url;
-                        cityThumbnail.className = "cityThumbnail";
+        fetch(
+          "https://api.openweathermap.org/data/2.5/find?q=" +
+            chosenCity.stadname +
+            "&units=metric&appid=23effeadc3b3bc19076120fd1e560168"
+        )
+          .then((response) => response.json())
+          .then((cityWeather) => {
+            let temp = cityWeather.list[0].main.temp;
+            let tempRounded = Math.round(temp);
 
+            cityWeatherDetails.innerHTML = "";
+            cityWeatherDetails.append(
+              "Just nu är det " +
+                tempRounded +
+                "°C i " +
+                cityWeather.list[0].name
+            );
 
-                        cityWikiInfo.append(cityWikiText, cityThumbnail);
-                        cityDetailsContainer.append(cityWikiInfo);
+            cityDetailsContainer.append(cityWeatherDetails);
+          });
 
-                    });
+        ////////////////////////////////////////////////////////////////////////////////
+        // knapp för att lagra vald stad i besökta städer i localstorage
+        ////////////////////////////////////////////////////////////////////////////////
 
-                ////////////////////////////////////////////////////////////////////////////////
-                // fetchar väder detailjer till vald stad och appendar i höger sida av main
-                ////////////////////////////////////////////////////////////////////////////////
+        visitedBtn.addEventListener("click", function () {
+          let storageSerialized = localStorage.getItem("besöktastäder");
 
-                fetch("https://api.openweathermap.org/data/2.5/find?q=" + chosenCity.stadname + "&units=metric&appid=23effeadc3b3bc19076120fd1e560168")
-                    .then(response => response.json())
-                    .then(cityWeather => {
+          if (storageSerialized) {
+            let storageDeSerialized = JSON.parse(
+              localStorage.getItem("besöktastäder")
+            );
+            storageDeSerialized.push(chosenCity.id);
+            localStorage.setItem(
+              "besöktastäder",
+              JSON.stringify(storageDeSerialized)
+            );
+          } else {
+            let besoktaStader = [];
+            besoktaStader.push(chosenCity.id);
+            localStorage.setItem(
+              "besöktastäder",
+              JSON.stringify(besoktaStader)
+            );
+          }
 
-
-                        let temp = cityWeather.list[0].main.temp
-                        let tempRounded = Math.round(temp);
-
-                        cityWeatherDetails.innerHTML = "";
-                        cityWeatherDetails.append("Just nu är det " + tempRounded + "°C i " + cityWeather.list[0].name);
-
-                        cityDetailsContainer.append(cityWeatherDetails);
-
-                    });
-
-                ////////////////////////////////////////////////////////////////////////////////
-                // knapp för att lagra vald stad i besökta städer i localstorage
-                ////////////////////////////////////////////////////////////////////////////////
-
-                visitedBtn.addEventListener("click", function () {
-
-                    let storageSerialized = localStorage.getItem("besöktastäder");
-
-                    if (storageSerialized) {
-
-                        let storageDeSerialized = JSON.parse(localStorage.getItem("besöktastäder"));
-                        storageDeSerialized.push(chosenCity.id)
-                        localStorage.setItem("besöktastäder", JSON.stringify(storageDeSerialized));
-
-                    } else {
-
-                        let besoktaStader = [];
-                        besoktaStader.push(chosenCity.id);
-                        localStorage.setItem("besöktastäder", JSON.stringify(besoktaStader));
-
-                    }
-
-                    sumOfAllPopulation(chosenCity.population);
-
-                });
-
-            }
-
-        }
-
-    });
-
-};
+          sumOfAllPopulation(chosenCity.population);
+        });
+      }
+    }
+  });
+}
 
 ////////////////////////////////////////////////////////////////////////////////
-// besökta städer tar emot cities från översta fetch, jämför sedan localstorage 
+// besökta städer tar emot cities från översta fetch, jämför sedan localstorage
 // städernas id med json städers id för att skriva ut besökta städer i main vid knapptryck
 ////////////////////////////////////////////////////////////////////////////////
 
 function citiesVisited(cities) {
+  cityDetailsContainer.innerHTML = "";
 
-    cityDetailsContainer.innerHTML = "";
+  let storagePopCountDeserialized = JSON.parse(
+    localStorage.getItem("antalinvånare")
+  );
+  cityDetailsContainer.innerText = "Städer du tidigare besökt är:";
+  const clearVisitedStorageBtn = document.createElement("button");
+  clearVisitedStorageBtn.innerText = "Rensa besökta städer";
+  clearVisitedStorageBtn.id = "clearVisitedStorageBtn";
 
-    let storagePopCountDeserialized = JSON.parse(localStorage.getItem("antalinvånare"));
-    cityDetailsContainer.innerText = "Städer du tidigare besökt är:"
-    const clearVisitedStorageBtn = document.createElement("button");
-    clearVisitedStorageBtn.innerText = "Rensa besökta städer";
-    clearVisitedStorageBtn.id = "clearVisitedStorageBtn";
+  let storageSerialized = localStorage.getItem("besöktastäder");
 
-    let storageSerialized = localStorage.getItem("besöktastäder");
+  if (storageSerialized) {
+    let storageDeSerialized = JSON.parse(localStorage.getItem("besöktastäder"));
 
-    if (storageSerialized) {
+    for (let i = 0; i < storageDeSerialized.length; i++) {
+      const cityVisited = storageDeSerialized[i];
 
-        let storageDeSerialized = JSON.parse(localStorage.getItem("besöktastäder"));
+      for (let i = 0; i < cities.length; i++) {
+        const cityCheck = cities[i];
 
-        for (let i = 0; i < storageDeSerialized.length; i++) {
-            const cityVisited = storageDeSerialized[i];
+        if (cityCheck.id == cityVisited) {
+          let visitedCityContainer = document.createElement("h3");
+          visitedCityContainer.innerText = cityCheck.stadname;
+          cityDetailsContainer.append(
+            visitedCityContainer,
+            clearVisitedStorageBtn
+          );
 
-            for (let i = 0; i < cities.length; i++) {
-                const cityCheck = cities[i];
-
-                if (cityCheck.id == cityVisited) {
-
-                    let visitedCityContainer = document.createElement("h3");
-                    visitedCityContainer.innerText = cityCheck.stadname;
-                    cityDetailsContainer.append(visitedCityContainer, clearVisitedStorageBtn);
-
-                    clearVisitedStorageBtn.addEventListener("click", function () {
-
-                        localStorage.removeItem("besöktastäder");
-                        totalPopulationOfVisitedCities = 0;
-                        localStorage.removeItem("antalinvånare");
-                        citiesVisited();
-
-
-                    });
-
-                }
-
-            }
-
+          clearVisitedStorageBtn.addEventListener("click", function () {
+            localStorage.removeItem("besöktastäder");
+            totalPopulationOfVisitedCities = 0;
+            localStorage.removeItem("antalinvånare");
+            citiesVisited();
+          });
         }
-        let summaDiv = document.createElement("p");
-        summaDiv.innerText = "Summa invånare alla besökta städer: "
-        cityDetailsContainer.append(summaDiv, storagePopCountDeserialized);
-
-    } else {
-        cityDetailsContainer.innerHTML = "";
+      }
     }
-
-};
+    let summaDiv = document.createElement("p");
+    summaDiv.innerText = "Summa invånare alla besökta städer: ";
+    cityDetailsContainer.append(summaDiv, storagePopCountDeserialized);
+  } else {
+    cityDetailsContainer.innerHTML = "";
+  }
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 // räknar ut summan av alla besökta städers invånare
 ////////////////////////////////////////////////////////////////////////////////
 
 function sumOfAllPopulation(populationToAdd) {
+  let storagePopCountSerialized = localStorage.getItem("antalinvånare");
 
-    let storagePopCountSerialized = localStorage.getItem("antalinvånare");
-
-    if (storagePopCountSerialized) {
-
-        let storagePopCountDeserialized = JSON.parse(localStorage.getItem("antalinvånare"));
-        totalPopulationOfVisitedCities = storagePopCountDeserialized + populationToAdd;
-        localStorage.setItem("antalinvånare", JSON.stringify(totalPopulationOfVisitedCities));
-
-    } else {
-
-        totalPopulationOfVisitedCities += populationToAdd;
-        localStorage.setItem("antalinvånare", JSON.stringify(totalPopulationOfVisitedCities));
-    }
-
-};
+  if (storagePopCountSerialized) {
+    let storagePopCountDeserialized = JSON.parse(
+      localStorage.getItem("antalinvånare")
+    );
+    totalPopulationOfVisitedCities =
+      storagePopCountDeserialized + populationToAdd;
+    localStorage.setItem(
+      "antalinvånare",
+      JSON.stringify(totalPopulationOfVisitedCities)
+    );
+  } else {
+    totalPopulationOfVisitedCities += populationToAdd;
+    localStorage.setItem(
+      "antalinvånare",
+      JSON.stringify(totalPopulationOfVisitedCities)
+    );
+  }
+}
