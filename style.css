@@ -1,152 +1,149 @@
-body{
-    margin: 0%;
-    background-color: black;
+body {
+  margin: 0%;
+  background-color: black;
 }
 
 nav {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    background-color: black;
-    padding: 20px;
-    height: 15vh;
-    font-size: 1.2rem;
-    color: snow;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    transition-duration: 0.5s;
-    transition:ease-in-out
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  background-color: black;
+  padding: 20px;
+  height: 15vh;
+  font-size: 1.2rem;
+  color: snow;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  transition-duration: 0.5s;
+  transition: ease-in-out;
 }
 
 nav div:hover {
-    color: goldenrod;
-    font-size: 1.6rem
+  color: goldenrod;
+  font-size: 1.6rem;
+  cursor: pointer;
 }
 
 main {
-    min-height: 50vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: rgb(36, 36, 36);
-
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(36, 36, 36);
 }
-.logo{
-    position: absolute;
-    left: 3.125rem;
+.logo {
+  position: absolute;
+  left: 3.125rem;
 }
-
 
 #mainContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    height: auto;
-    width: 50%;
-    padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  height: auto;
+  width: 50%;
+  padding: 10px;
 }
 #mainContainer div {
-    font-size: 1rem;
-    color: snow;
-    transition-duration: 0.4s;
-    transition: ease-in-out;
+  font-size: 1rem;
+  color: snow;
+  transition-duration: 0.4s;
+  transition: ease-in-out;
 }
 
 #mainContainer div:hover {
-    color: goldenrod;
-    font-size: 1.2rem;
+  color: goldenrod;
+  font-size: 1.2rem;
 }
 
 #cityDetailsContainer {
-    background-color: rgb(36, 36, 36);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    height: auto;
-    width: 50%;
-    padding: 10px;
-    padding-bottom: 30px;
-    font-size: 1rem;
-    color: snow;
+  background-color: rgb(36, 36, 36);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  height: auto;
+  width: 50%;
+  padding: 10px;
+  padding-bottom: 30px;
+  font-size: 1rem;
+  color: snow;
 }
 
 #cityDetailsContainer div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 #cityDetailsContainer img:hover {
-    width: 400px;   
+  width: 400px;
 }
 
 #footerContainer {
-    padding: 20px;
-    gap: 20px;
-    background-color: black;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-size: 1rem;
-    color: whitesmoke;
-    text-align: center;
+  padding: 20px;
+  gap: 20px;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  color: whitesmoke;
+  text-align: center;
 }
 
 .cityThumbnail {
-
-    border-radius: 5%;
-    
+  border-radius: 5%;
 }
 
 #visitedBtn {
-    background-color: white;
-    color: black;
-    border: 2px solid #555555;
-    padding: 16px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    transition-duration: 0.4s;
-  }
-  
-  #visitedBtn:hover {
-    background-color: #555555;
-     color: white;
-  }
+  background-color: white;
+  color: black;
+  border: 2px solid #555555;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+}
 
-  #clearVisitedStorageBtn {
-    background-color: white;
-    color: black;
-    border: 2px solid #555555;
-    padding: 16px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 1rem;
-    margin: 4px 2px;
-    transition-duration: 0.4s;
-  }
-  
-  #clearVisitedStorageBtn:hover {
-    background-color: #555555;
-     color: white;
-  }
+#visitedBtn:hover {
+  background-color: #555555;
+  color: white;
+}
 
-  footer img {
-    opacity: 50%;
-    border: whitesmoke solid 1px;
-    border-radius: 15%;
-  }
+#clearVisitedStorageBtn {
+  background-color: white;
+  color: black;
+  border: 2px solid #555555;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1rem;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+}
 
-  footer img:hover {
-      border: goldenrod 1px solid;
-      border-radius: 15%;
-      opacity: 100%;
-  }
+#clearVisitedStorageBtn:hover {
+  background-color: #555555;
+  color: white;
+}
+
+footer img {
+  opacity: 50%;
+  border: whitesmoke solid 1px;
+  border-radius: 15%;
+}
+
+footer img:hover {
+  border: goldenrod 1px solid;
+  border-radius: 15%;
+  opacity: 100%;
+}
