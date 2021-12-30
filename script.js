@@ -176,7 +176,7 @@ function renderChosenCityInfo(chosenCities) {
               JSON.stringify(besoktaStader)
             );
           }
-
+          visitedBtn.remove();
           sumOfAllPopulation(chosenCity.population);
         });
       }
