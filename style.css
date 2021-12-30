@@ -36,6 +36,7 @@ main {
 .logo {
   position: absolute;
   left: 3.125rem;
+  opacity: 0;
 }
 
 #mainContainer {
@@ -66,6 +67,7 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-around;
     gap: 20px;
     height: auto;
     width: 50%;
@@ -80,12 +82,12 @@ main {
 #cityDetailsContainer div {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
 }
 
-#cityDetailsContainer img:hover {
-    width: 250px;   
+#cityDetailsContainer div div {
+    padding: 30px;
 }
 
 #footerContainer {
