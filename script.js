@@ -198,9 +198,18 @@ function renderChosenCityInfo(chosenCities) {
                             JSON.stringify(besoktaStader)
                         );
                     }
-                    visitedBtn.remove();
+                    //visitedBtn.remove();
                     sumOfAllPopulation(chosenCity.population);
                 });
+                let cityInLs = JSON.parse(localStorage.getItem("besöktastäder"));
+                if(cityInLs != null){
+                    for(let i = 0; i < cityInLs.length; i++){
+                        // Döljer knappen "Besökt" i de städer jag har besökt
+                        if(chosenCity.id == JSON.parse(localStorage.getItem("besöktastäder"))[i]){
+                            visitedBtn.style.visibility = "hidden";
+                        }  
+                    }
+                }
             }
         }
     });
@@ -260,7 +269,7 @@ function citiesVisited(cities) {
         gsap.from(".visitedCityContainer", { duration: 2, x: "+100vw", ease: "elastic", opacity: 0 });
 
     } else {
-        cityDetailsContainer.innerHTML = "";
+        cityDetailsContainer.innerHTML = "Du har inte besökt några städer..";
     }
 }
 
