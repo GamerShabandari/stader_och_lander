@@ -198,7 +198,7 @@ function renderChosenCityInfo(chosenCities) {
                             JSON.stringify(besoktaStader)
                         );
                     }
-                    //visitedBtn.remove();
+                    visitedBtn.remove();
                     sumOfAllPopulation(chosenCity.population);
                 });
                 let cityInLs = JSON.parse(localStorage.getItem("besöktastäder"));
