@@ -23,6 +23,7 @@ gsap.fromTo(".logo", { duration: 1, opacity: 0, scale: 0, ease: "power.2.in" }, 
 
 gsap.from('#footerContainer', { duration: 2, delay: 1, y: '200%', ease: 'elastic' });
 
+gsap.from(".logo", { y: -10, duration: 1, ease: "power2.in", yoyo:true, repeat:-1 });
 
 
 ////////////////////////////////////////////////////////////////////////////////
