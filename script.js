@@ -69,10 +69,10 @@ function renderNavbar(countries, cities) {
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// tar emot cities från json fetch och skapar en knapp för att rendera ut i main
-// knappen jämför id på event klick med id på städer, det som matchar skrivs ut på main
-////////////////////////////////////////////////////////////////////////////////
+/** 
+ tar emot cities från json fetch och skapar en knapp för att rendera ut i main
+ knappen jämför id på event klick med id på städer, det som matchar skrivs ut på main
+ */
 
 function renderMainCities(target, cities) {
     let chosenCountry = target;
